@@ -378,19 +378,19 @@ void CActorCondition::UpdateTutorialThresholds()
 		strcpy_s(cb_name,"_G.on_actor_radiation");
 	}
 
-	if(b && !m_condition_flags.test(ePhyHealthMinReached) && GetPsyHealth()>_cPsyHealthThr){
-//.		m_condition_flags.set			(ePhyHealthMinReached, TRUE);
+	if(b && !m_condition_flags.test(ePhyHealthMinReached) && GetPsyHealth() < _cPsyHealthThr){
+		m_condition_flags.set			(ePhyHealthMinReached, TRUE);
 		b=false;
 		strcpy_s(cb_name,"_G.on_actor_psy");
 	}
 
-	if(b && !m_condition_flags.test(eCantWalkWeight)){
-//.		m_condition_flags.set			(eCantWalkWeight, TRUE);
+	if(b && m_condition_flags.test(eCantWalkWeight) && !m_condition_flags.test(eCantWalkWeightReached)){
+		m_condition_flags.set			(eCantWalkWeightReached, TRUE);
 		b=false;
 		strcpy_s(cb_name,"_G.on_actor_cant_walk_weight");
 	}
 
-	if(b && !m_condition_flags.test(eWeaponJammedReached)&&m_object->inventory().GetActiveSlot()!=NO_ACTIVE_SLOT){
+	if(b && !m_condition_flags.test(eWeaponJammedReached) && m_object->inventory().GetActiveSlot()!=NO_ACTIVE_SLOT){
 		PIItem item							= m_object->inventory().ItemFromSlot(m_object->inventory().GetActiveSlot());
 		CWeapon* pWeapon					= smart_cast<CWeapon*>(item); 
 		if(pWeapon&&pWeapon->GetCondition()<_cWpnCondition){

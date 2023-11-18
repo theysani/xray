@@ -25,6 +25,7 @@ private:
 			eWeaponJammedReached			=(1<<5),
 			ePhyHealthMinReached			=(1<<6),
 			eCantWalkWeight					=(1<<7),
+			eCantWalkWeightReached					= (1 << 8),
 			};
 	Flags16											m_condition_flags;
 private:
